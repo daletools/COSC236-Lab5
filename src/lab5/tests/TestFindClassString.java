@@ -2,10 +2,10 @@ package lab5.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import lab5.PaperBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import lab5.Book;
 import lab5.Library;
 import lab5.Member;
 
@@ -22,8 +22,8 @@ private Library library;
 	
 	Member member1 = new Member("Dude");
 	Member member2 = new Member("Gal");
-	Book book1 = new Book("Dune");
-	Book book2 = new Book("1984");
+	PaperBook paperBook1 = new PaperBook("Dune");
+	PaperBook paperBook2 = new PaperBook("1984");
 
 	@Test
 	void FindMember() {
@@ -44,18 +44,18 @@ private Library library;
 
 	@Test
 	void FindBook() {
-		library.addBook(book1);
-		library.addBook(book2);
-		Book book = library.findBookByTitle(book1.getTitle());
-		assert(book == book1);
+		library.addBook(paperBook1);
+		library.addBook(paperBook2);
+		PaperBook paperBook = library.findBookByTitle(paperBook1.getTitle());
+		assert(paperBook == paperBook1);
 		assert(library.booksCount() == 2);
-		library.removeBook(book2);
+		library.removeBook(paperBook2);
 		assert(library.booksCount() == 1);
-		book = library.findBookByTitle(book2.getTitle());
-		assert(book == null);
-		library.removeBook(book2);
+		paperBook = library.findBookByTitle(paperBook2.getTitle());
+		assert(paperBook == null);
+		library.removeBook(paperBook2);
 		assert(library.booksCount() == 1);
-		library.removeBook(book1);
+		library.removeBook(paperBook1);
 		assert(library.booksCount() == 0);
 	}
 }

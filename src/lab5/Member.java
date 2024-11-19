@@ -6,17 +6,17 @@ import java.util.Iterator;
 public class Member {
 
 	private String name;
-	private ArrayList<Book> borrowedBooks; // Book class dependency
+	private ArrayList<PaperBook> borrowedPaperBooks; // PaperBook class dependency
 	
 	public Member(String name) {
 		this.name = name;
-		this.borrowedBooks = new ArrayList<>();
+		this.borrowedPaperBooks = new ArrayList<>();
 	}
 	public String getName() {
 		return name;
 	}
-	public ArrayList<Book> getBorrowedBooks() { 
-		return borrowedBooks;
+	public ArrayList<PaperBook> getBorrowedBooks() {
+		return borrowedPaperBooks;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -24,31 +24,31 @@ public class Member {
 	public String toString() {
 		return "Member: " + name;
 	}
-	public void borrowBook(Book book) {
-		if (book != null && book.getIsAvailable() == true) {
-			borrowedBooks.add(book);
-			book.setIsAvailable(false);
+	public void borrowBook(PaperBook paperBook) {
+		if (paperBook != null && paperBook.getIsAvailable() == true) {
+			borrowedPaperBooks.add(paperBook);
+			paperBook.setIsAvailable(false);
 		}
 	}
-	public void returnBook(Book book) {
-		if (book != null) {
-			borrowedBooks.remove(book);
-			book.setIsAvailable(true);
+	public void returnBook(PaperBook paperBook) {
+		if (paperBook != null) {
+			borrowedPaperBooks.remove(paperBook);
+			paperBook.setIsAvailable(true);
 		}
 	}
 	public void listBorrowedBooks() {
-		for (Book book : borrowedBooks)
-			System.out.println(book); // book.toString()
+		for (PaperBook paperBook : borrowedPaperBooks)
+			System.out.println(paperBook); // paperBook.toString()
 	}
 	public int borrowedBooksCount() {
-		return borrowedBooks.size();
+		return borrowedPaperBooks.size();
 	}
 	public void returnAllBooks() {
-		Iterator<Book> bookIterator = borrowedBooks.iterator();
+		Iterator<PaperBook> bookIterator = borrowedPaperBooks.iterator();
 	    while(bookIterator.hasNext()) {
-		   	 Book book = bookIterator.next();
-		   	 book.setIsAvailable(true);
+		   	 PaperBook paperBook = bookIterator.next();
+		   	 paperBook.setIsAvailable(true);
 	    }
-	    borrowedBooks.clear(); // clear array of borrowed books
+	    borrowedPaperBooks.clear(); // clear array of borrowed books
 	}
 }
