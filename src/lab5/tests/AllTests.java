@@ -2,10 +2,12 @@
 //
 //import org.junit.platform.suite.api.SelectClasses;
 //import org.junit.platform.suite.api.Suite;
+//import org.junit.runner.RunWith;
+//import org.junit.runners.Suite;
 //
 //
-//@Suite
-//@SelectClasses({TestAddRemoveBooks.class,
+//@RunWith(Suite.class)
+//@Suite.SuiteClasses({TestAddRemoveBooks.class,
 //				TestAddRemoveMembers.class,
 //				TestFindClassString.class,
 //				TestBorrowBooks.class,
