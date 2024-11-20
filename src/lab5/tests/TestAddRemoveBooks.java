@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import lab5.Library;
 import lab5.Member;
 
-
-
 class TestAddRemoveBooks {
 	
 	private Library library;
