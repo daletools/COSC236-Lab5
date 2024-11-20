@@ -1,12 +1,12 @@
 package lab5.tests;
 
-import lab5.Book;
-import lab5.PaperBook;
-import org.junit.Before;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import lab5.Book;
+import lab5.PaperBook;
 
 public class PaperBookTest {
 
