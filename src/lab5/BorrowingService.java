@@ -27,6 +27,9 @@ public class BorrowingService implements BorrowingServiceAPI{
 		}else if(!book.getIsAvailable()){
 			output.setIsSuccess(false);
 			output.setBorrowingMessage(book + " is not available.");
+		} else if (member.borrowedBooksCount() == borrowingLimit) {
+			output.setIsSuccess(false);
+			output.setBorrowingMessage("The member has reached their borrowed books limit.");
 		}else {
 			output.setIsSuccess(true);
 			output.setBorrowingMessage(member + " borrowed " + book);
