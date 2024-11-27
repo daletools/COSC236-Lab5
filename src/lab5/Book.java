@@ -1,13 +1,10 @@
 package lab5;
 
 public interface Book {
-  String getTitle();
-
-  String toString();
-
-  void setIsAvailable(boolean isAvailable);
-
-  boolean getIsAvailable();
+	public String toString();
+	public void setIsAvailable(boolean available);
+	public boolean getIsAvailable();
+	public String getTitle();
 }
 
 

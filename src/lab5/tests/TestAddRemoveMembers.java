@@ -3,12 +3,12 @@ package lab5.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import lab5.PaperBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import lab5.Member;
 import lab5.Library;
+import lab5.*;
 
 class TestAddRemoveMembers {
 
@@ -20,10 +20,10 @@ class TestAddRemoveMembers {
 		 this.library = new Library(); // empty library for each test
 	}
 	
-	Member member1 = new Member("Dude");
-	Member member2 = new Member("Gal");
-	PaperBook paperBook1 = new PaperBook("Dune");
-	PaperBook paperBook2 = new PaperBook("1984");
+	Member member1 = new Member("Dude", BorrowingService.getInstance());
+	Member member2 = new Member("Gal", BorrowingService.getInstance());
+	PaperBook book1 = new PaperBook("Dune");
+	PaperBook book2 = new PaperBook("1984");
 	
 	@Test
 	void AddMember() {
@@ -58,21 +58,21 @@ class TestAddRemoveMembers {
 		
 		AddMember();
 		assertEquals(library.membersCount(), 2, "Two members should be in the library");
-		library.addBook(paperBook1);
-		library.addBook(paperBook2);
+		library.addBook(book1);
+		library.addBook(book2);
 		assertEquals(library.booksCount(), 2, "Two books should be in the library");
 		
-		member1.borrowBook(paperBook1);
-		member1.borrowBook(paperBook2);
+		member1.borrowBook(book1);
+		member1.borrowBook(book2);
 		assertEquals(member1.borrowedBooksCount(), 2, "Should be two borrowed books");
-		assertFalse(paperBook1.getIsAvailable(), "PaperBook should be not available");
-		assertFalse(paperBook2.getIsAvailable(), "PaperBook should be not available");
+		assertFalse(book1.getIsAvailable(), "Book should be not available");
+		assertFalse(book2.getIsAvailable(), "Book should be not available");
 		
 		library.removeMember(member1);
 		assertEquals(library.membersCount(), 1, "Only one member should remain");
 		assertEquals(library.booksCount(), 2, "Two books should be in the library");
-		assertTrue(paperBook1.getIsAvailable(), "PaperBook should be available");
-		assertTrue(paperBook2.getIsAvailable(), "PaperBook should be available");
+		assertTrue(book1.getIsAvailable(), "Book should be available");
+		assertTrue(book2.getIsAvailable(), "Book should be available");
 				
 	}
 }
