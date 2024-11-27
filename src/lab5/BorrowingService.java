@@ -6,7 +6,7 @@ public class BorrowingService implements BorrowingServiceAPI{
 	private BorrowingService() {
 		borrowingLimit = 3;
 	}
-	public static BorrowingService getInstance() {
+	public static synchronized BorrowingService getInstance() {
 		if(instance == null)
 			instance = new BorrowingService();
 		return instance;
