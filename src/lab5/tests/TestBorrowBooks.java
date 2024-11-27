@@ -17,6 +17,8 @@ class TestBorrowBooks {
 	
 	PaperBook book1 = new PaperBook("Dune");
 	PaperBook book2 = new PaperBook("1984");
+	Book book3 = new EBook("Head First Design Patterns");
+	Book book4 = new AudioBook("The Eye of the World");
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -39,7 +41,7 @@ class TestBorrowBooks {
 		assertTrue(book2.getIsAvailable(),"Book must be available");
 		member1.borrowBook(book2);
 		assertFalse(book1.getIsAvailable(), "Book should not be available");
-		assertEquals(member1.borrowedBooksCount(), 2, "The book coubnt shoud be 2");
+		assertEquals(member1.borrowedBooksCount(), 2, "The book count should be 2");
 	}
 	
 	@Test
@@ -64,6 +66,19 @@ class TestBorrowBooks {
 		assertTrue(book2.getIsAvailable(), "Book should be available after return");
 		assertEquals(member1.borrowedBooksCount(), 0, "Member 1 should have no books");
 		
+	}
+
+	@Test
+	void tooManyBorrowedBooks() {
+		member1.borrowBook(book1);
+		member1.borrowBook(book2);
+		member1.borrowBook(book3);
+		member1.borrowBook(book4);
+		assertEquals(3, member1.borrowedBooksCount(), "Member should not be able to borrow more than 3 books.");
+		assertTrue(book4.getIsAvailable(), "Book 4 should not have been marked unavailable.");
+		member1.returnBook(book3);
+		member1.borrowBook(book4);
+		assertTrue(member1.getBorrowedBooks().contains(book4), "Member should be able to borrow after returning below the borrow limit.");
 	}
 
 }
