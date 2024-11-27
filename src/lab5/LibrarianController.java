@@ -2,10 +2,16 @@ package lab5;
 
 public class LibrarianController {
 	
-	Library library; // Library dependency
+	private Library library; // Library dependency
+	private BorrowingService bS;
+	private BookFactory paperFactory, eFactory, audioFactory;
 	
 	public LibrarianController( ) {
 		this.library = new Library(); // Constructor injection
+		bS = BorrowingService.getInstance();
+		paperFactory = new PaperBookFactory();
+		eFactory = new EBookFactory();
+		audioFactory = new AudioBookFactory();
 	}
 	public Library getLibrary() {
 		return this.library;
@@ -16,11 +22,22 @@ public class LibrarianController {
 	public void showMembers() {
 		library.showMembers();
 	}
-	public void addBook(String title) {
-		library.addBook(new PaperBook(title));  // PaperBook class constructor dependency
+	public void addBook(BookFactory factory, String title) {
+		library.addBook(factory.createBook(title));
 	}
+	//code changes added new book types - part 4
+	public void addPaperBook(String title) {
+		library.addBook(paperFactory.createBook(title));  // Book class constructor dependency
+	}
+	public void addEBook(String title) {
+		library.addBook(eFactory.createBook(title));
+	}
+	public void addAudioBook(String title) {
+		library.addBook(audioFactory.createBook(title));
+	}
+	//
 	public void addMember(String name) {
-		library.addMember(new Member(name)); // Member class constructor dependency
+		library.addMember(new Member(name, bS)); // Member class constructor dependency
 	}
 	public void removeBook(String title) {
 		library.removeBook(title); // remove 
@@ -36,11 +53,11 @@ public class LibrarianController {
 			System.out.println("Member " + name + " not found.");
 	}
 	public void showBook(String title) {
-		PaperBook paperBook = library.findBookByTitle(title);
-		if (paperBook != null)
-			System.out.println(paperBook);
+		Book book = library.findBookByTitle(title);
+		if (book != null)
+			System.out.println(book);
 		else 
-			System.out.println("PaperBook " + title + " not found.");
+			System.out.println("Book " + title + " not found.");
 	}
 	public void showMemberBooks(String name) {
 		Member member = library.findMemberByName(name);
@@ -52,19 +69,19 @@ public class LibrarianController {
 	
 	public void borrowBookByMember(String title, String name) {
 		Member member = library.findMemberByName(name); // use library for search
-		PaperBook paperBook = library.findBookByTitle(title);  // use library for search
-		if (paperBook != null && member != null)
-			member.borrowBook(paperBook); // member borrows a paperBook, not library
+		Book book = library.findBookByTitle(title);  // use library for search
+		if (book != null && member != null)
+			member.borrowBook(book); // member borrows a book, not library 
 		else 	
-			System.out.println("Either paperBook " + title + " or member " + name + " not found.");
+			System.out.println("Either book " + title + " or member " + name + " not found.");
 	}
 	
 	public void returnBookByMember(String title, String name) {
 		Member member = library.findMemberByName(name); // use library for search
-		PaperBook paperBook = library.findBookByTitle(title); // use library for search
-		if (paperBook != null && member != null)
-			member.returnBook(paperBook); // members returns paperBook.
+		Book book = library.findBookByTitle(title); // use library for search 
+		if (book != null && member != null)
+			member.returnBook(book); // members returns book. 
 		else  	
-			System.out.println("Either paperBook " + title + " or member " + name + " not found.");
+			System.out.println("Either book " + title + " or member " + name + " not found.");
 	}
 }

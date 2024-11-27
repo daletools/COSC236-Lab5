@@ -6,17 +6,21 @@ import java.util.Iterator;
 public class Member {
 
 	private String name;
-	private ArrayList<PaperBook> borrowedPaperBooks; // PaperBook class dependency
-	
-	public Member(String name) {
+	private ArrayList<Book> borrowedBooks; // Book class dependency
+	private BorrowingService bS;
+	public Member(String name, BorrowingService bS) {
 		this.name = name;
-		this.borrowedPaperBooks = new ArrayList<>();
+		this.bS = bS;
+		this.borrowedBooks = new ArrayList<>();
 	}
 	public String getName() {
 		return name;
 	}
-	public ArrayList<PaperBook> getBorrowedBooks() {
-		return borrowedPaperBooks;
+	public BorrowingService getBorrowingService() {
+		return bS;
+	}
+	public ArrayList<Book> getBorrowedBooks() { 
+		return borrowedBooks;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -24,31 +28,28 @@ public class Member {
 	public String toString() {
 		return "Member: " + name;
 	}
-	public void borrowBook(PaperBook paperBook) {
-		if (paperBook != null && paperBook.getIsAvailable() == true) {
-			borrowedPaperBooks.add(paperBook);
-			paperBook.setIsAvailable(false);
-		}
+	public void borrowBook(Book book) {
+		BorrowingBookResult borrowingResult = bS.borrowBook(this, book);
+		System.out.println("Success: " + borrowingResult.getIsSuccess() + ": " + borrowingResult.getBorrowingMessage());
+		
 	}
-	public void returnBook(PaperBook paperBook) {
-		if (paperBook != null) {
-			borrowedPaperBooks.remove(paperBook);
-			paperBook.setIsAvailable(true);
-		}
+	public void returnBook(Book book) {
+		BorrowingBookResult borrowingResult = bS.returnBook(this, book);
+		System.out.println("Success: " + borrowingResult.getIsSuccess() + ": " + borrowingResult.getBorrowingMessage());
 	}
 	public void listBorrowedBooks() {
-		for (PaperBook paperBook : borrowedPaperBooks)
-			System.out.println(paperBook); // paperBook.toString()
+		for (Book book : borrowedBooks)
+			System.out.println(book); // book.toString()
 	}
 	public int borrowedBooksCount() {
-		return borrowedPaperBooks.size();
+		return borrowedBooks.size();
 	}
 	public void returnAllBooks() {
-		Iterator<PaperBook> bookIterator = borrowedPaperBooks.iterator();
+		Iterator<Book> bookIterator = borrowedBooks.iterator();
 	    while(bookIterator.hasNext()) {
-		   	 PaperBook paperBook = bookIterator.next();
-		   	 paperBook.setIsAvailable(true);
+		   	 Book book = bookIterator.next();
+		   	 book.setIsAvailable(true);
 	    }
-	    borrowedPaperBooks.clear(); // clear array of borrowed books
+	    borrowedBooks.clear(); // clear array of borrowed books
 	}
 }
