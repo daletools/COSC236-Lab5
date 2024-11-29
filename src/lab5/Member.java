@@ -7,7 +7,7 @@ public class Member {
 
 	private String name;
 	private ArrayList<Book> borrowedBooks; // Book class dependency
-	private BorrowingService bS;
+	private BorrowingServiceAPI bS;
 
 	public Member(String name, BorrowingService bS) {
 		this.name = name;
@@ -18,8 +18,9 @@ public class Member {
 	public String getName() {
 		return name;
 	}
+  
+	public BorrowingServiceAPI getBorrowingService() {
 
-	public BorrowingService getBorrowingService() {
 		return bS;
 	}
 
